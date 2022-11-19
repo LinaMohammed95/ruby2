@@ -1,14 +1,15 @@
-json.restaurants @restaurant do |restaurant|
+json.restaurants do
+json.array! (@restaurant) do |restaurant|
 json.partial! 'restaurant', restaurant: restaurant
-
-json.foods @food do |food|
-json.id    restaurant.id
-json.partial! 'food', food: food
-
-json.desserts @dessert do |dessert|
-json.id    restaurant.id
-json.food_id    food.id
-json.partial! 'dessert', dessert: dessert
-end
+    json.foods do
+    json.array! (restaurant.foods) do |food|
+    json.partial! 'food', food: food
+        json.desserts  do
+        json.array! (food.desserts) do |dessert|
+        json.partial! 'dessert', dessert: dessert
+        end
+        end
+    end
+    end
 end
 end
